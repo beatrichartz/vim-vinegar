@@ -27,9 +27,9 @@ if !exists("g:netrw_banner")
 endif
 unlet! s:netrw_up
 
-nnoremap <silent> <Plug>VinegarUp :call <SID>opendir('edit')<CR>
-if empty(maparg('-', 'n')) && !hasmapto('<Plug>VinegarUp')
-  nmap - <Plug>VinegarUp
+nnoremap <silent> <Plug>VinegarVerticalSplitUp :call <SID>opendir('edit')<CR>
+if empty(maparg('/', 'n')) && !hasmapto('<Plug>VinegarVerticalSplitUp')
+  nmap / <Plug>VinegarVerticalSplitUp
 endif
 
 nnoremap <silent> <Plug>VinegarTabUp :call <SID>opendir('tabedit')<CR>
@@ -113,7 +113,7 @@ endfunction
 function! s:setup_vinegar() abort
   if !exists('s:netrw_up')
     let orig = maparg('-', 'n')
-    if orig =~? '^<plug>' && orig !=# '<Plug>VinegarUp'
+    if orig =~? '^<plug>' && orig !=# '<Plug>VinegarVerticalSplitUp'
       let s:netrw_up = 'execute "normal \'.substitute(orig, ' *$', '', '').'"'
     elseif orig =~# '^:'
       " :exe "norm! 0"|call netrw#LocalBrowseCheck(<SNR>123_NetrwBrowseChgDir(1,'../'))<CR>
@@ -122,7 +122,7 @@ function! s:setup_vinegar() abort
       let s:netrw_up = ''
     endif
   endif
-  nmap <buffer> - <Plug>VinegarUp
+  nmap <buffer> / <Plug>VinegarVerticalSplitUp
   cnoremap <buffer><expr> <Plug><cfile> get(<SID>relatives('.'),0,"\022\006")
   if empty(maparg('<C-R><C-F>', 'c'))
     cmap <buffer> <C-R><C-F> <Plug><cfile>
